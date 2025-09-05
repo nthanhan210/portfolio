@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Giới Thiệu Bản Thân</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .name {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .title {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .github { background: #333; }
+        .facebook { background: #1877f2; }
+        .linkedin { background: #0077b5; }
+        .website { background: #667eea; }
+        .email { background: #ea4335; }
+        .phone { background: #25d366; }
+        
+        .content-grid {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+            user-select: none; /* Ngăn chọn text khi drag */
+        }
+        
+        .content-grid::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .scroll-container {
+            position: relative;
+        }
+        
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .scroll-btn.prev {
+            left: -25px;
+        }
+        
+        .scroll-btn.next {
+            right: -25px;
+        }
+        
+        .scroll-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, opacity 0.6s ease;
+            width: 400px;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInCard 0.6s ease forwards;
+            user-select: none; /* Ngăn chọn text khi drag */
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes slideInCard {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-item strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .info-item a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+        
+        .contact-card {
+            text-align: center;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .contact-method {
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+            transition: border-color 0.3s ease;
+        }
+        
+        .contact-method:hover {
+            border-color: #667eea;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .contact-links {
+                gap: 10px;
+            }
+            
+            .social-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .content-grid {
+                flex-direction: column;
+                overflow-x: visible;
+                gap: 20px;
+            }
+            
+            .card {
+                padding: 18px;
+                width: 100%;
+                animation-delay: 0.1s !important;
+            }
+            
+            .scroll-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="An Nhỏ" onerror="this.style.display='none'; this.parentElement.innerHTML='NTA';">
+            </div>
+            <h1 class="name">An Nhỏ</h1>
+            <p class="title">Kỹ sư - Mạng Máy Tính Và Truyền Thông Dữ Liệu</p>
+            <p class="description">
+                Kỹ sư tốt nghiệp chuyên ngành Mạng Máy Tính và có kinh nghiệm làm việc tại công ty đa quốc gia. 
+                Đam mê lập trình và phát triển ứng dụng, luôn học hỏi công nghệ mới để nâng cao kỹ năng chuyên môn.
+            </p>
+            
+            <!-- Contact Links -->
+            <div class="contact-links">
+                <a href="mailto:nthanhan210@gmail.com" class="social-btn email">
+                    📧 Email
+                </a>
+                <a href="tel:+84354353202" class="social-btn phone">
+                    📱 Phone
+                </a>
+                <a href="https://github.com/nthanhan210" target="_blank" class="social-btn github">
+                    💻 GitHub
+                </a>
+                <a href="https://www.facebook.com/nthanhan210" target="_blank" class="social-btn facebook">
+                    📘 Facebook
+                </a>
+                <a href="https://www.linkedin.com/in/nthanhan210" target="_blank" class="social-btn linkedin">
+                    💼 LinkedIn
+                </a>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="scroll-container">
+            <button class="scroll-btn prev" id="prevBtn">‹</button>
+            <div class="content-grid" id="contentGrid">
+            <!-- Thông tin cá nhân -->
+            <div class="card">
+                <h2>👤 Thông tin cá nhân</h2>
+                
+                <div class="info-item">
+                    <strong>Họ và tên:</strong>
+                    Nguyễn Thanh An
+                </div>
+                
+                <div class="info-item">
+                    <strong>Ngày sinh:</strong>
+                    20/10/2000
+                </div>
+                
+                <div class="info-item">
+                    <strong>Địa chỉ:</strong>
+                    Quận 7, TP. Hồ Chí Minh
+                </div>
+                
+                <div class="info-item">
+                    <strong>Trường:</strong>
+                    Đại học Tôn Đức Thắng
+                </div>
+                
+                <div class="info-item">
+                    <strong>Chuyên ngành:</strong>
+                    Mạng Máy Tính Và Truyền Thông Dữ Liệu
+                </div>
+                
+                <div class="info-item">
+                    <strong>Tốt nghiệp:</strong>
+                    Tháng 5/2023
+                </div>
+                
+                <div class="info-item">
+                    <strong>Công việc hiện tại:</strong>
+                    Kỹ sư Lập trình Nhúng - Lĩnh vực Automotive tại Bosch (từ 12/2022)
+                </div>
+            </div>
+
+            <!-- Kinh nghiệm làm việc -->
+            <div class="card">
+                <h2>💼 Kinh nghiệm làm việc</h2>
+                
+                <div class="info-item">
+                    <strong>🏢 Bosch (12/2022 - Hiện tại)</strong>
+                    <p><strong>Vị trí:</strong> Kỹ sư Lập trình Nhúng - Lĩnh vực Automotive</p>
+                    <p>Phát triển phần mềm nhúng cho các hệ thống ô tô, làm việc với ECU (Electronic Control Unit), 
+                    thiết kế và tối ưu hóa các giải pháp công nghệ cho ngành automotive tại công ty công nghệ đa quốc gia hàng đầu.</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🎓 Thực tập sinh tại Bosch (06/2022 - 11/2022)</strong>
+                    <p><strong>Vị trí:</strong> Intern</p>
+                    <p>Tham gia các dự án thực tế, học hỏi kinh nghiệm làm việc trong môi trường 
+                    công nghệ chuyên nghiệp và được chuyển thành nhân viên chính thức.</p>
+                </div>
+            </div>
+
+            <!-- Kỹ năng -->
+            <div class="card">
+                <h2>💻 Kỹ năng chuyên môn</h2>
+                
+                <h3 style="margin: 20px 0 10px 0;">Ngôn ngữ lập trình:</h3>
+                <div>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">C/C++</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                </div>
+                
+                <h3 style="margin: 20px 0 10px 0;">Framework & Tools:</h3>
+                <div>
+                    <span class="skill-tag">Bootstrap</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+                
+                <h3 style="margin: 20px 0 10px 0;">Soft Skills:</h3>
+                <div>
+                    <span class="skill-tag">Teamwork</span>
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Time Management</span>
+                </div>
+            </div>
+
+            <!-- Dự án nổi bật -->
+            <div class="card">
+                <h2>🚀 Dự án nổi bật</h2>
+                
+                <div class="info-item">
+                    <strong>Cấu hình máy in 3D với Arduino</strong>
+                    <p>Xây dựng mô hình máy in 3D điều khiển bằng Arduino. 
+                    Cấu hình code và tối ưu hóa phần cứng cho hiệu suất tốt nhất.</p>
+                    <p><em>Thời gian: 10/2019 - 12/2019</em></p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>Website đặt vé xem phim</strong>
+                    <p>Thiết kế giao diện và phát triển tính năng đặt vé online. 
+                    Xử lý lưu trữ dữ liệu trên MongoDB và tích hợp hệ thống thanh toán.</p>
+                    <p><em>Thời gian: 03/2020 - 05/2020</em></p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>Ứng dụng dự báo thời tiết Android</strong>
+                    <p>Phát triển ứng dụng mobile với Android Studio. 
+                    Tích hợp API thời tiết và GPS để dự báo theo vị trí thời gian thực.</p>
+                    <p><em>Thời gian: 03/2021 - 05/2021</em></p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>Machine Learning - Dự đoán khách hàng ngân hàng</strong>
+                    <p>Nghiên cứu và áp dụng các thuật toán ML để dự đoán khách hàng 
+                    ngưng sử dụng dịch vụ thẻ tín dụng. So sánh độ chính xác các mô hình.</p>
+                    <p><em>Thời gian: 11/2021 - 12/2021</em></p>
+                </div>
+            </div>
+
+            <!-- Thành tích -->
+            <div class="card">
+                <h2>🏆 Thành tích & Chứng chỉ</h2>
+                
+                <div class="info-item">
+                    <strong>🏆 Hoàn thành xuất sắc chương trình thực tập Bosch</strong>
+                    <p>Được chuyển từ thực tập sinh thành nhân viên chính thức sau 6 tháng</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🎓 Tốt nghiệp Đại học Tôn Đức Thắng</strong>
+                    <p>Bằng Cử nhân chuyên ngành Mạng Máy Tính và Truyền Thông Dữ Liệu</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>📜 Chứng chỉ TOEIC 695</strong>
+                    <p>Chứng nhận khả năng tiếng Anh trong môi trường làm việc quốc tế</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🌐 Hoàn thành khóa học CCNA</strong>
+                    <p>Cisco Certified Network Associate - Chứng chỉ chuyên ngành mạng máy tính</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>💻 Hoàn thành nhiều dự án công nghệ</strong>
+                    <p>Từ phần cứng (Arduino) đến phần mềm (Web, Mobile, AI/ML)</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🔧 Kinh nghiệm làm việc tại công ty đa quốc gia</strong>
+                    <p>2+ năm kinh nghiệm tại Bosch, môi trường công nghệ quốc tế</p>
+                </div>
+            </div>
+
+            <!-- Sở thích -->
+            <div class="card">
+                <h2>🎯 Sở thích & Hoạt động</h2>
+                
+                <div class="info-item">
+                    <strong>💻 Coding & Development</strong>
+                    <p>Thích khám phá công nghệ mới và xây dựng các dự án cá nhân</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>📚 Học hỏi liên tục</strong>
+                    <p>Tham gia các khóa học online, đọc blog công nghệ, theo dõi xu hướng</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🏃‍♂️ Thể thao</strong>
+                    <p>Chơi bóng đá, chạy bộ, bơi lội để duy trì sức khỏe</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🎮 Gaming</strong>
+                    <p>Chơi game strategy và puzzle để rèn luyện tư duy logic</p>
+                </div>
+                
+                <div class="info-item">
+                    <strong>🌍 Du lịch</strong>
+                    <p>Khám phá văn hóa mới và mở rộng tầm nhìn</p>
+                </div>
+            </div>
+
+            <!-- Liên hệ chi tiết -->
+            <div class="card contact-card">
+                <h2>📞 Liên hệ với tôi</h2>
+                <p style="margin-bottom: 25px;">Luôn sẵn sàng kết nối và trao đổi!</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <h4>📧 Email</h4>
+                        <a href="mailto:nthanhan210@gmail.com">
+                            nthanhan210@gmail.com
+                        </a>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h4>📱 Điện thoại</h4>
+                        <a href="tel:+84354353202">+84 354 353 202</a><br>
+                        <small style="color: #666;">Zalo, WhatsApp, Telegram</small>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h4>💼 LinkedIn</h4>
+                        <a href="https://www.linkedin.com/in/nthanhan210" target="_blank">
+                            www.linkedin.com/in/nthanhan210
+                        </a><br>
+                        <small style="color: #666;">Professional network</small>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h4>💻 GitHub</h4>
+                        <a href="https://github.com/nthanhan210" target="_blank">
+                            github.com/nthanhan210
+                        </a><br>
+                        <small style="color: #666;" id="repo-count">Đang tải...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>🤝 Hãy kết nối với tôi!</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">
+                Tôi luôn tìm kiếm cơ hội học hỏi, hợp tác trong các dự án thú vị 
+                và kết nối với những người có cùng đam mê công nghệ.
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="mailto:nthanhan210@gmail.com" class="social-btn" 
+                   style="background: rgba(255,255,255,0.2); border: 2px solid white;">
+                    📧 Gửi Email
+                </a>
+                <a href="https://www.linkedin.com/in/nthanhan210" target="_blank" class="social-btn" 
+                   style="background: rgba(255,255,255,0.2); border: 2px solid white;">
+                    💼 Kết nối LinkedIn
+                </a>
+                <a href="https://github.com/nthanhan210" target="_blank" class="social-btn" 
+                   style="background: rgba(255,255,255,0.2); border: 2px solid white;">
+                    💻 Xem GitHub
+                </a>
+            </div>
+        </div>
+            <button class="scroll-btn next" id="nextBtn">›</button>
+        </div>
+    </div>
+
+    <script>
+        // Điều khiển cuộn card
+        document.addEventListener('DOMContentLoaded', function() {
+            const contentGrid = document.getElementById('contentGrid');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const cardWidth = 420; // 400px width + 20px gap
+            
+            function updateButtons() {
+                const maxScroll = contentGrid.scrollWidth - contentGrid.clientWidth;
+                prevBtn.disabled = contentGrid.scrollLeft <= 0;
+                nextBtn.disabled = contentGrid.scrollLeft >= maxScroll;
+            }
+            
+            function scrollToNext() {
+                contentGrid.scrollBy({
+                    left: cardWidth,
+                    behavior: 'smooth'
+                });
+            }
+            
+            function scrollToPrev() {
+                contentGrid.scrollBy({
+                    left: -cardWidth,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Event listeners
+            nextBtn.addEventListener('click', scrollToNext);
+            prevBtn.addEventListener('click', scrollToPrev);
+            contentGrid.addEventListener('scroll', updateButtons);
+            
+            // Tự động cuộn
+            let autoScrollInterval;
+            
+            function startAutoScroll() {
+                autoScrollInterval = setInterval(() => {
+                    if (contentGrid.scrollLeft >= contentGrid.scrollWidth - contentGrid.clientWidth) {
+                        contentGrid.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        scrollToNext();
+                    }
+                }, 4000); // Cuộn mỗi 4 giây
+            }
+            
+            function stopAutoScroll() {
+                clearInterval(autoScrollInterval);
+            }
+            
+            // Bắt đầu auto scroll
+            startAutoScroll();
+            
+            // Dừng auto scroll khi user tương tác
+            contentGrid.addEventListener('mouseenter', stopAutoScroll);
+            contentGrid.addEventListener('mouseleave', startAutoScroll);
+            prevBtn.addEventListener('click', stopAutoScroll);
+            nextBtn.addEventListener('click', stopAutoScroll);
+            
+            // Khởi tạo trạng thái buttons
+            updateButtons();
+            
+            // Drag to scroll functionality
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            contentGrid.addEventListener('mousedown', (e) => {
+                isDown = true;
+                contentGrid.style.cursor = 'grabbing';
+                startX = e.pageX - contentGrid.offsetLeft;
+                scrollLeft = contentGrid.scrollLeft;
+                stopAutoScroll(); // Dừng auto scroll khi bắt đầu drag
+            });
+            
+            contentGrid.addEventListener('mouseleave', () => {
+                isDown = false;
+                contentGrid.style.cursor = 'grab';
+            });
+            
+            contentGrid.addEventListener('mouseup', () => {
+                isDown = false;
+                contentGrid.style.cursor = 'grab';
+                // Khởi động lại auto scroll sau 2 giây không hoạt động
+                setTimeout(() => {
+                    startAutoScroll();
+                }, 2000);
+            });
+            
+            contentGrid.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - contentGrid.offsetLeft;
+                const walk = (x - startX) * 2; // Tốc độ drag
+                contentGrid.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Set cursor style
+            contentGrid.style.cursor = 'grab';
+        });
+
+        // Tự động lấy số lượng repositories từ GitHub API
+        async function fetchGitHubRepos() {
+            try {
+                const username = 'nthanhan210'; // GitHub username
+                const response = await fetch(`https://api.github.com/users/${username}`);
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    const repoCount = userData.public_repos;
+                    
+                    // Cập nhật số lượng repositories
+                    const repoElement = document.getElementById('repo-count');
+                    if (repoElement) {
+                        repoElement.textContent = `${repoCount} repositories`;
+                    }
+                } else {
+                    // Nếu API fail, hiển thị fallback
+                    document.getElementById('repo-count').textContent = 'GitHub Profile';
+                }
+            } catch (error) {
+                console.log('Không thể tải dữ liệu GitHub:', error);
+                // Hiển thị fallback nếu có lỗi
+                document.getElementById('repo-count').textContent = 'GitHub Profile';
+            }
+        }
+
+        // Gọi function khi trang đã load
+        document.addEventListener('DOMContentLoaded', fetchGitHubRepos);
+    </script>
+</body>
+</html>
