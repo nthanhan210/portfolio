@@ -315,6 +315,52 @@
                 display: none;
             }
         }
+        
+        /* Zalo QR Modal */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .qr-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .close-qr {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .close-qr:hover {
+            color: #000;
+        }
     </style>
 </head>
 <body>
@@ -336,8 +382,8 @@
                 <a href="mailto:nthanhan210@gmail.com" class="social-btn email">
                     📧 Email
                 </a>
-                <a href="tel:+84354353202" class="social-btn phone">
-                    📱 Phone
+                <a href="#zalo-qr" onclick="showZaloQR()" class="social-btn" style="background: #0068ff;">
+                    💬 Zalo
                 </a>
                 <a href="https://github.com/nthanhan210" target="_blank" class="social-btn github">
                     💻 GitHub
@@ -556,9 +602,11 @@
                     </div>
                     
                     <div class="contact-method">
-                        <h4>📱 Điện thoại</h4>
-                        <a href="tel:+84354353202">+84 354 353 202</a><br>
-                        <small style="color: #666;">Zalo, WhatsApp, Telegram</small>
+                        <h4>💬 Zalo</h4>
+                        <div onclick="showZaloQR()" style="cursor: pointer; color: #0068ff;">
+                            Click để xem QR Code
+                        </div>
+                        <small style="color: #666;">Scan QR để kết bạn</small>
                     </div>
                     
                     <div class="contact-method">
@@ -607,6 +655,18 @@
         </div>
     </div>
 
+    <!-- Zalo QR Modal -->
+    <div id="qrModal" class="qr-modal">
+        <div class="qr-modal-content">
+            <span class="close-qr" onclick="hideZaloQR()">&times;</span>
+            <h3 style="margin-bottom: 20px; color: #0068ff;">🔗 Kết bạn Zalo</h3>
+            <img src="zalo.jpg" alt="Zalo QR Code" class="qr-code" onerror="this.style.display='none'; this.parentElement.innerHTML='<p>QR Code không khả dụng</p>';">
+            <p style="margin-top: 20px; color: #666;">
+                Mở ứng dụng Zalo → Quét QR code để kết bạn
+            </p>
+        </div>
+    </div>
+
     <script>
         // Điều khiển cuộn card
         document.addEventListener('DOMContentLoaded', function() {
@@ -650,7 +710,7 @@
                     } else {
                         scrollToNext();
                     }
-                }, 4000); // Cuộn mỗi 4 giây
+                }, 7000); // Cuộn mỗi 7 giây
             }
             
             function stopAutoScroll() {
@@ -736,6 +796,23 @@
 
         // Gọi function khi trang đã load
         document.addEventListener('DOMContentLoaded', fetchGitHubRepos);
+        
+        // Zalo QR Modal functions
+        function showZaloQR() {
+            document.getElementById('qrModal').style.display = 'block';
+        }
+        
+        function hideZaloQR() {
+            document.getElementById('qrModal').style.display = 'none';
+        }
+        
+        // Click outside modal để đóng
+        window.onclick = function(event) {
+            const modal = document.getElementById('qrModal');
+            if (event.target === modal) {
+                hideZaloQR();
+            }
+        }
     </script>
 </body>
 </html>
