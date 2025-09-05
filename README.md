@@ -25,10 +25,10 @@
 - **LinkedIn:** [linkedin.com/in/nthanhan210](https://www.linkedin.com/in/nthanhan210)
 - **GitHub:** [github.com/nthanhan210](https://github.com/nthanhan210)
 
-## Cách chạy
-1. Clone repository này
-2. Mở file `index.html` trong trình duyệt
-3. Hoặc truy cập trực tiếp: [GitHub Pages URL]
+## Cách truy cập
+1. **Trực tiếp:** [https://thanhanit.pro.vn](https://thanhanit.pro.vn)
+2. **GitHub Pages:** [https://nthanhan210.github.io/portfolio](https://nthanhan210.github.io/portfolio)
+3. Clone và mở local: `git clone https://github.com/nthanhan210/portfolio.git`
 
 ## Kinh nghiệm
 - **Hiện tại:** Kỹ sư Lập trình Nhúng - Lĩnh vực Automotive tại Bosch (12/2022 - nay)
